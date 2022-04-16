@@ -19,29 +19,28 @@ function CreateArea(props) {
         }
 
         let newNote = {
-            title: noteTitle,
-            content: noteBody
+            title: noteTitle, content: noteBody
         }
 
         setNote(newNote)
+
     }
 
-    return (
-        <div>
+
+    return (<div>
             <form>
                 <input name="title" placeholder="Title" onChange={handleNoteInput} value={noteTitle}/>
                 <textarea name="content" placeholder="Take a note..." rows="3" onChange={handleNoteInput}
                           value={noteBody}/>
-                <button type="submit" onClick={() => {
-                    props.onAdd(note)
+                <button type="submit" onClick={(event) => {
+                    props.onAdd(event, note)
                     setNoteTitle("")
                     setNoteBody("")
                     setNote({})
                 }}>Add
                 </button>
             </form>
-        </div>
-    );
+        </div>);
 }
 
 export default CreateArea;
