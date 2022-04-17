@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import shortid from 'shortid';
 
 function CreateArea(props) {
 
@@ -19,7 +20,9 @@ function CreateArea(props) {
         }
 
         let newNote = {
-            title: noteTitle, content: noteBody
+            id: shortid.generate(),
+            title: noteTitle,
+            content: noteBody
         }
 
         setNote(newNote)

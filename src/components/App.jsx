@@ -2,8 +2,8 @@ import React, {useState} from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import Note from "./Note";
-import notes from "../notes"
 import CreateArea from "./CreateArea";
+import shortid from 'shortid';
 
 
 function App() {
@@ -17,13 +17,24 @@ function App() {
         event.preventDefault();
     }
 
+    function deleteNote(id) {
+        setListNotes((prevItems) => {
+            return prevItems.filter((item) => {
+                return item.id !== id
+            })
+
+        })
+
+    }
+
 
     return (
         <div>
             <Header/>
             <CreateArea onAdd={handleAdd}/>
             {listNotes.map(note =>
-                <Note title={note.title} content={note.content}/>
+                <Note key={shortid.generate()} id={note.id} title={note.title} content={note.content}
+                      isClicked={deleteNote}/>
             )}
 
 
