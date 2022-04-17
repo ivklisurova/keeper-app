@@ -1,11 +1,15 @@
 import React, {useState} from "react";
 import shortid from 'shortid';
+import AddIcon from '@material-ui/icons/Add';
+import Fab from '@material-ui/core/Fab';
+import Zoom from '@material-ui/core/Zoom';
 
 function CreateArea(props) {
 
-    const [noteTitle, setNoteTitle] = useState("")
-    const [noteBody, setNoteBody] = useState("")
-    const [note, setNote] = useState({})
+    const [noteTitle, setNoteTitle] = useState("");
+    const [noteBody, setNoteBody] = useState("");
+    const [note, setNote] = useState({});
+    const [isExpanded, setExpanded] = useState(false)
 
 
     function handleNoteInput(event) {
@@ -29,21 +33,29 @@ function CreateArea(props) {
 
     }
 
+    function handleArea() {
+        setExpanded(!isExpanded);
+    }
+
 
     return (<div>
-            <form>
-                <input name="title" placeholder="Title" onChange={handleNoteInput} value={noteTitle}/>
-                <textarea name="content" placeholder="Take a note..." rows="3" onChange={handleNoteInput}
-                          value={noteBody}/>
-                <button type="submit" onClick={(event) => {
+        <form className="create-note">
+            {isExpanded && <input name="title" placeholder="Title" onChange={handleNoteInput} value={noteTitle}/>}
+            <textarea name="content" placeholder="Take a note..." rows={isExpanded ? 3 : 1} onChange={handleNoteInput}
+                      value={noteBody} onClick={handleArea}/>
+            {isExpanded && <Zoom in={true}>
+                <Fab type="submit" onClick={(event) => {
                     props.onAdd(event, note)
                     setNoteTitle("")
                     setNoteBody("")
                     setNote({})
-                }}>Add
-                </button>
-            </form>
-        </div>);
+                }}>
+                    <AddIcon onClick={handleArea}/>
+                </Fab>
+            </Zoom>}
+
+        </form>
+    </div>);
 }
 
 export default CreateArea;
